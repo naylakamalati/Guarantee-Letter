@@ -40,7 +40,7 @@ PDF export renders each A4 page in the browser with `html2canvas` and `jsPDF`. P
 4. No environment variables are required.
 5. After deployment, test editing a draft, uploading an authorized asset, PDF download, and browser printing.
 
-The Vercel configuration includes an SPA fallback for direct navigation. `.gitignore` excludes build output, dependencies, local environment files, generated PDFs, and the stamp/signature assets.
+`.gitignore` excludes build output, dependencies, local environment files, generated PDFs, and the stamp/signature assets.
 
 ## Project layout
 
