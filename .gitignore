@@ -1,0 +1,20 @@
+# Dependencies and build output
+node_modules/
+dist/
+
+# Local tooling and environment secrets
+.vercel/
+.env
+.env.*
+!.env.example
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Local/private documents and assets
+*.pdf
+public/assets/airnav-stempel-ttd*
+
+# Operating system files
+.DS_Store
+Thumbs.db

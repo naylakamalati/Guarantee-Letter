@@ -1,0 +1,11 @@
+export const DEFAULT_ROOM_TYPES: string[] = [
+  "SUPERIOR",
+  "DELUXE",
+  "EXECUTIVE",
+  "SUITE",
+  "FAMILY",
+  "DELUXE KING",
+  "DELUXE TWIN",
+  "SUPERIOR SINGLE",
+  "EXECUTIVE SUITE",
+];
