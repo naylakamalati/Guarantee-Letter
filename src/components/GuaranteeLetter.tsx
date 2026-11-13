@@ -208,7 +208,7 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
                 )}
 
                 {/* 5. GUEST TABLE */}
-                <div className="guest-table-wrapper mb-4">
+                <div className="guest-table-wrapper mb-2">
                   <table
                     className="guest-table w-full table-fixed border-collapse border border-black text-black"
                     style={{ fontSize: '11pt', lineHeight: '1.2' }}
@@ -413,9 +413,9 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
                         alt="Stempel resmi dan tanda tangan Perum LPPNPI"
                         className="absolute pointer-events-none"
                         style={{
-                          top: '-7mm',
-                          left: '-25mm',
-                          width: '80mm',
+                          top: '6mm',
+                          left: 0,
+                          width: '54mm',
                           height: 'auto',
                         }}
                       />
