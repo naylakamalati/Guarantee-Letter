@@ -413,15 +413,15 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
                         alt="Stempel resmi dan tanda tangan Perum LPPNPI"
                         className="absolute pointer-events-none"
                         style={{
-                          top: '6mm',
-                          left: 0,
-                          width: '54mm',
+                          top: 0,
+                          left: '-15.5mm',
+                          width: '52.5mm',
                           height: 'auto',
                         }}
                       />
 
                       <div
-                        className="absolute left-0 top-[46mm] z-10 font-bold uppercase tracking-wider text-black text-left"
+                        className="absolute left-0 top-[30mm] z-10 font-bold uppercase tracking-wider text-black text-left"
                         style={{
                           fontSize: '11.5pt',
                           whiteSpace: 'nowrap',
