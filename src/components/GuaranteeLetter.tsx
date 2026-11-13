@@ -184,7 +184,7 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
                       <div className="flex">
                         <span className="w-20 font-normal">Perihal</span>
                         <span className="w-4">:</span>
-                        <span className="font-bold underline">{subject || 'Guarantee Letter'}</span>
+                        <span className="font-normal underline">{subject || 'Guarantee Letter'}</span>
                       </div>
                     </div>
 
@@ -313,13 +313,13 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
                         return (
                           <tr key={guest.id || idx}>
                             <td
-                              className="border border-black py-2 px-1 text-center font-bold align-middle"
+                              className="border border-black py-2 px-1 text-center font-normal align-middle"
                               style={{ fontSize: '11pt' }}
                             >
                               {globalNo}
                             </td>
                             <td
-                              className="border border-black py-2 px-2.5 font-bold text-left align-middle break-words"
+                              className="border border-black py-2 px-2.5 font-normal text-left align-middle break-words"
                               style={{ fontSize: '10.5pt', lineHeight: '1.25' }}
                             >
                               {titleFormatted ? `${titleFormatted} ` : ''}
@@ -397,33 +397,34 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
                         marginTop: '13mm',
                         marginLeft: 0,
                         width: '120mm',
+                        height: '51mm',
                         fontFamily: '"Times New Roman", Times, Tinos, serif',
                       }}
                     >
-                      {/* Signatory Title - flush left aligned with Demikian */}
                       <div
-                        className="font-bold uppercase tracking-wide leading-tight relative z-10 text-black text-left"
-                        style={{ fontSize: '11pt' }}
+                        className="absolute left-0 top-0 z-10 font-bold uppercase tracking-wide leading-tight text-black text-left"
+                        style={{ fontSize: '11pt', whiteSpace: 'nowrap' }}
                       >
                         {signatoryTitle || 'JUNIOR MANAGER PERSONALIA & UMUM'}
                       </div>
 
-                      <div
-                        className="relative"
-                        style={{ width: '55mm', height: '43mm' }}
-                      >
-                        <img
-                          src={OFFICIAL_STAMP_SIGNATURE_URL}
-                          alt="Stempel resmi dan tanda tangan Perum LPPNPI"
-                          className="absolute top-0 left-0 w-full h-full object-contain pointer-events-none"
-                        />
-                      </div>
+                      <img
+                        src={OFFICIAL_STAMP_SIGNATURE_URL}
+                        alt="Stempel resmi dan tanda tangan Perum LPPNPI"
+                        className="absolute pointer-events-none"
+                        style={{
+                          top: '-7mm',
+                          left: '-25mm',
+                          width: '80mm',
+                          height: 'auto',
+                        }}
+                      />
 
-                      {/* Fixed signatory name - independent of saved drafts and templates */}
                       <div
-                        className="font-bold uppercase tracking-wider relative z-10 text-black text-left"
+                        className="absolute left-0 top-[46mm] z-10 font-bold uppercase tracking-wider text-black text-left"
                         style={{
                           fontSize: '11.5pt',
+                          whiteSpace: 'nowrap',
                         }}
                       >
                         {FIXED_SIGNATORY_NAME}
