@@ -210,15 +210,15 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
                 {/* 5. GUEST TABLE */}
                 <div className="guest-table-wrapper mb-4">
                   <table
-                    className="guest-table w-full border-collapse border border-black text-black"
+                    className="guest-table w-full table-fixed border-collapse border border-black text-black"
                     style={{ fontSize: '11pt', lineHeight: '1.2' }}
                   >
                     <colgroup>
-                      <col />
-                      <col />
-                      <col />
-                      <col />
-                      <col />
+                      <col style={{ width: '12mm' }} />
+                      <col style={{ width: '54mm' }} />
+                      <col style={{ width: '40mm' }} />
+                      <col style={{ width: '32mm' }} />
+                      <col style={{ width: '32mm' }} />
                     </colgroup>
                     <thead>
                       <tr className="bg-white text-center font-bold" style={{ height: '16mm' }}>
@@ -371,7 +371,7 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
 
                     {/* Centered Billing Block */}
                     <div
-                      className="billing-block text-center font-bold uppercase mx-auto my-3"
+                      className="billing-block text-center font-normal uppercase mx-auto my-3"
                       style={{ fontSize: '11pt', lineHeight: '1.5' }}
                     >
                       {billingBlock.map((line, lIdx) => (

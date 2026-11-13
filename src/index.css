@@ -47,7 +47,7 @@
 
 .guest-table-wrapper table {
   width: 100%;
-  table-layout: auto;
+  table-layout: fixed;
 }
 
 .guest-table,
