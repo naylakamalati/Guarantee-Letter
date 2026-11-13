@@ -8,6 +8,8 @@ const { mockSave, mockAddPage, mockAddImage, mockHtml2Canvas, mockCanvas } = vi.
     mockAddImage: vi.fn(),
     mockHtml2Canvas: vi.fn(),
     mockCanvas: {
+      width: 794,
+      height: 1123,
       toDataURL: vi.fn().mockReturnValue('data:image/png;base64,page'),
     },
   })
@@ -34,6 +36,7 @@ class MockElement {
   style: Record<string, string> = {};
   offsetWidth = 794;
   offsetHeight = 1123;
+  scrollHeight = 1123;
   parentNode: MockElement | null = null;
   children: MockElement[] = [];
 
@@ -115,6 +118,32 @@ describe('exportToPdf', () => {
     expect(mockAddPage).toHaveBeenCalledTimes(1);
     expect(mockSave).toHaveBeenCalledWith('Guarantee-Letter_Test.pdf');
     expect(progressReports).toContain('Selesai!');
+  });
+
+  it('fits content taller than A4 without cropping it', async () => {
+    const tallClone = new MockElement();
+    tallClone.offsetHeight = 1500;
+    tallClone.scrollHeight = 1500;
+    const page = new MockElement();
+    vi.spyOn(page, 'cloneNode').mockReturnValue(tallClone);
+    mockHtml2Canvas.mockResolvedValueOnce({
+      ...mockCanvas,
+      height: 1500,
+    });
+
+    await exportToPdf([page as unknown as HTMLElement], {
+      filename: 'Guarantee-Letter_Test.pdf',
+    });
+
+    expect(mockHtml2Canvas.mock.calls[0][1]).toMatchObject({
+      height: 1500,
+      windowHeight: 1500,
+    });
+    const [, , x, y, width, height] = mockAddImage.mock.calls[0];
+    expect(x).toBeGreaterThan(0);
+    expect(y).toBe(0);
+    expect(width).toBeLessThan(210);
+    expect(height).toBe(297);
   });
 
   it('throws an error when the document contains no A4 pages', async () => {

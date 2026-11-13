@@ -1,5 +1,9 @@
 import { LetterData, LetterHistoryItem, LetterTemplate } from '../types';
-import { INITIAL_LETTER_DATA } from '../config/defaultLetter';
+import {
+  FIXED_SIGNATORY_NAME,
+  INITIAL_LETTER_DATA,
+  OFFICIAL_STAMP_SIGNATURE_URL,
+} from '../config/defaultLetter';
 
 const STORAGE_KEY_LETTER = 'airnav_gl_draft';
 const STORAGE_KEY_HISTORY = 'airnav_gl_history';
@@ -28,15 +32,26 @@ export function loadSavedLetter(): LetterData {
         nama,
       };
     });
+    const savedBillingBlock = Array.isArray(parsed.billingBlock)
+      ? parsed.billingBlock
+      : INITIAL_LETTER_DATA.billingBlock;
+    const migratedBillingBlock = savedBillingBlock.flatMap((line: string, index: number) =>
+      line === 'BAGIAN PERSONALIA & UMUM' &&
+      savedBillingBlock[index - 1] === 'JUANDA INTERNATIONAL AIRPORT'
+        ? ['UP. IBU ENY LAILIYAH', 'NO. TELP: 031 – 2986515']
+        : [line]
+    );
 
     return {
       ...INITIAL_LETTER_DATA,
       ...parsed,
+      signatoryName: FIXED_SIGNATORY_NAME,
       guests: migratedGuests,
+      billingBlock: migratedBillingBlock,
       assets: {
         logoUrl: parsed.assets?.logoUrl || INITIAL_LETTER_DATA.assets.logoUrl,
-        stampUrl: parsed.assets?.stampUrl || INITIAL_LETTER_DATA.assets.stampUrl,
-        signatureUrl: parsed.assets?.signatureUrl || INITIAL_LETTER_DATA.assets.signatureUrl,
+        stampUrl: OFFICIAL_STAMP_SIGNATURE_URL,
+        signatureUrl: null,
       },
     };
   } catch (e) {

@@ -14,6 +14,7 @@ pnpm-debug.log*
 # Local/private documents and assets
 *.pdf
 public/assets/airnav-stempel-ttd*
+!public/assets/airnav-stempel-ttd-transparent.png
 
 # Operating system files
 .DS_Store

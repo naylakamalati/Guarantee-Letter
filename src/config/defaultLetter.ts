@@ -1,5 +1,9 @@
 import { LetterData } from '../types';
 
+export const FIXED_SIGNATORY_NAME = 'NURUL HUDA';
+export const OFFICIAL_STAMP_SIGNATURE_URL =
+  '/assets/airnav-stempel-ttd-transparent.png';
+
 export const INITIAL_LETTER_DATA: LetterData = {
   city: "Surabaya",
   date: "2026-10-07",
@@ -55,15 +59,16 @@ export const INITIAL_LETTER_DATA: LetterData = {
     "PERUM LPPNPI CABANG SURABAYA",
     "ADMINISTRATION AND OPERATION BUILDING",
     "JUANDA INTERNATIONAL AIRPORT",
-    "BAGIAN PERSONALIA & UMUM",
+    "UP. IBU ENY LAILIYAH",
+    "NO. TELP: 031 – 2986515",
   ],
   closingSentence:
     "Demikian disampaikan, atas kerja samanya diucapkan terima kasih.",
   signatoryTitle: "JUNIOR MANAGER PERSONALIA & UMUM",
-  signatoryName: "NAMA PENANDATANGAN",
+  signatoryName: FIXED_SIGNATORY_NAME,
   assets: {
     logoUrl: "/assets/airnav-logo.png",
-    stampUrl: null,
+    stampUrl: OFFICIAL_STAMP_SIGNATURE_URL,
     signatureUrl: null,
   },
   showPlaceholdersInPdf: false,

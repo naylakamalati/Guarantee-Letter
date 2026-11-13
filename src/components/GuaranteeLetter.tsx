@@ -1,6 +1,10 @@
 import { forwardRef } from 'react';
 import { LetterData, Guest } from '../types';
 import { formatLetterDate, formatTableDate } from '../lib/formatDate';
+import {
+  FIXED_SIGNATORY_NAME,
+  OFFICIAL_STAMP_SIGNATURE_URL,
+} from '../config/defaultLetter';
 
 interface GuaranteeLetterProps {
   data: LetterData;
@@ -25,7 +29,6 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
       billingBlock,
       closingSentence,
       signatoryTitle,
-      signatoryName,
       assets,
       showPlaceholdersInPdf,
       repeatHeaderOnPage2,
@@ -161,6 +164,12 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
                   </div>
                 )}
 
+                {!isFirstPage && (
+                  <div className="mb-4 text-center font-sans text-[10pt] text-black">
+                    UP. IBU ENY LAILIYAH NO. TELP: 031 – 2986515
+                  </div>
+                )}
+
                 {/* 2. DATE LINE & METADATA (Page 1 only) */}
                 {isFirstPage && (
                   <>
@@ -168,12 +177,12 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
 
                     <div className="metadata-block space-y-1 mb-4 text-left">
                       <div className="flex">
-                        <span className="w-20 font-bold">Nomor</span>
+                        <span className="w-20 font-normal">Nomor</span>
                         <span className="w-4">:</span>
                         <span className="font-normal">{letterNumber || '--'}</span>
                       </div>
                       <div className="flex">
-                        <span className="w-20 font-bold">Perihal</span>
+                        <span className="w-20 font-normal">Perihal</span>
                         <span className="w-4">:</span>
                         <span className="font-bold underline">{subject || 'Guarantee Letter'}</span>
                       </div>
@@ -201,39 +210,39 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
                 {/* 5. GUEST TABLE */}
                 <div className="guest-table-wrapper mb-4">
                   <table
-                    className="w-full table-fixed border-collapse border border-black text-black"
+                    className="guest-table w-full border-collapse border border-black text-black"
                     style={{ fontSize: '11pt', lineHeight: '1.2' }}
                   >
                     <colgroup>
-                      <col style={{ width: '7%' }} />
-                      <col style={{ width: '35%' }} />
-                      <col style={{ width: '20%' }} />
-                      <col style={{ width: '19%' }} />
-                      <col style={{ width: '19%' }} />
+                      <col />
+                      <col />
+                      <col />
+                      <col />
+                      <col />
                     </colgroup>
                     <thead>
                       <tr className="bg-white text-center font-bold" style={{ height: '16mm' }}>
                         <th
                           className="border border-black px-1 text-center align-middle"
-                          style={{ width: '7%', height: '16mm', fontSize: '11pt' }}
+                          style={{ height: '16mm', fontSize: '11pt' }}
                         >
                           No.
                         </th>
                         <th
                           className="border border-black px-2 text-center align-middle"
-                          style={{ width: '35%', height: '16mm', fontSize: '11pt' }}
+                          style={{ height: '16mm', fontSize: '11pt' }}
                         >
                           NAMA
                         </th>
                         <th
                           className="border border-black px-1 text-center align-middle"
-                          style={{ width: '20%', height: '16mm', fontSize: '11pt' }}
+                          style={{ height: '16mm', fontSize: '11pt' }}
                         >
                           TYPE
                         </th>
                         <th
                           className="border border-black p-0 text-center align-top"
-                          style={{ width: '38%', height: '16mm' }}
+                          style={{ height: '16mm' }}
                           colSpan={2}
                         >
                           <div
@@ -317,19 +326,19 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
                               <span className="uppercase">{guest.nama || '--'}</span>
                             </td>
                             <td
-                              className="border border-black py-2 px-1 text-center uppercase align-middle whitespace-nowrap"
+                              className="border border-black py-2 px-1 text-center uppercase align-middle"
                               style={{ fontSize: '10pt', lineHeight: '1.2' }}
                             >
                               {guest.type || '--'}
                             </td>
                             <td
-                              className="border border-black py-2 px-1 text-center align-middle whitespace-nowrap"
+                              className="border border-black py-2 px-1 text-center align-middle"
                               style={{ fontSize: '10.5pt', lineHeight: '1.2' }}
                             >
                               {formatTableDate(guest.checkIn)}
                             </td>
                             <td
-                              className="border border-black py-2 px-1 text-center align-middle whitespace-nowrap"
+                              className="border border-black py-2 px-1 text-center align-middle"
                               style={{ fontSize: '10.5pt', lineHeight: '1.2' }}
                             >
                               {formatTableDate(guest.checkOut)}
@@ -399,77 +408,25 @@ export const GuaranteeLetter = forwardRef<HTMLDivElement, GuaranteeLetterProps>(
                         {signatoryTitle || 'JUNIOR MANAGER PERSONALIA & UMUM'}
                       </div>
 
-                      {/* Official Stamp & Signature Overlay */}
-                      {assets.stampUrl ? (
+                      <div
+                        className="relative"
+                        style={{ width: '55mm', height: '43mm' }}
+                      >
                         <img
-                          src={assets.stampUrl}
-                          alt="Stempel Resmi Perum LPPNPI & TTD"
-                          className="absolute pointer-events-none opacity-95 z-20"
-                          style={{
-                            top: '-2mm',
-                            left: '-16mm',
-                            width: '51mm',
-                            height: '37.1mm',
-                            mixBlendMode: 'multiply',
-                          }}
+                          src={OFFICIAL_STAMP_SIGNATURE_URL}
+                          alt="Stempel resmi dan tanda tangan Perum LPPNPI"
+                          className="absolute top-0 left-0 w-full h-full object-contain pointer-events-none"
                         />
-                      ) : (
-                        showPlaceholdersInPdf && (
-                          <div
-                            className="absolute rounded-full border border-dashed border-gray-400 flex items-center justify-center text-[9px] font-sans text-gray-400 font-bold tracking-wider text-center pointer-events-none"
-                            style={{
-                              top: '-1mm',
-                              left: '-12mm',
-                              width: '34mm',
-                              height: '34mm',
-                            }}
-                          >
-                            STEMPEL
-                          </div>
-                        )
-                      )}
+                      </div>
 
-                      {/* Separate custom signature if uploaded */}
-                      {assets.signatureUrl ? (
-                        <img
-                          src={assets.signatureUrl}
-                          alt="Tanda Tangan Pejabat"
-                          className="absolute pointer-events-none z-20"
-                          style={{
-                            top: '10mm',
-                            left: '6mm',
-                            width: '42mm',
-                            height: '22mm',
-                            mixBlendMode: 'multiply',
-                          }}
-                        />
-                      ) : (
-                        !assets.stampUrl && showPlaceholdersInPdf && (
-                          <div
-                            className="absolute border border-dashed border-gray-400 flex items-center justify-center text-[9px] font-sans text-gray-400 font-bold tracking-wider pointer-events-none"
-                            style={{
-                              top: '12mm',
-                              left: '8mm',
-                              width: '28mm',
-                              height: '14mm',
-                            }}
-                          >
-                            TTD
-                          </div>
-                        )
-                      )}
-
-                      {/* Vertical spacer between Title and Name */}
-                      <div style={{ height: '24mm' }} />
-
-                      {/* Signatory Name - flush left aligned with Demikian and Title (NO Underline) */}
+                      {/* Fixed signatory name - independent of saved drafts and templates */}
                       <div
                         className="font-bold uppercase tracking-wider relative z-10 text-black text-left"
                         style={{
                           fontSize: '11.5pt',
                         }}
                       >
-                        {signatoryName}
+                        {FIXED_SIGNATORY_NAME}
                       </div>
                     </div>
                   </div>

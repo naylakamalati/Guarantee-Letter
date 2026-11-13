@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Upload, Trash2, RefreshCw, ShieldCheck } from 'lucide-react';
 import { LetterAssets } from '../types';
+import { OFFICIAL_STAMP_SIGNATURE_URL } from '../config/defaultLetter';
 
 interface AssetUploaderProps {
   assets: LetterAssets;
@@ -128,14 +129,14 @@ export const AssetUploader: React.FC<AssetUploaderProps> = ({
   const handleRestoreDefaults = () => {
     onChange({
       logoUrl: '/assets/airnav-logo.png',
-      stampUrl: null,
+      stampUrl: OFFICIAL_STAMP_SIGNATURE_URL,
       signatureUrl: null,
     });
   };
 
   const isUsingDefaults =
     assets.logoUrl === '/assets/airnav-logo.png' &&
-    assets.stampUrl === null &&
+    assets.stampUrl === OFFICIAL_STAMP_SIGNATURE_URL &&
     assets.signatureUrl === null;
 
   return (
@@ -144,7 +145,7 @@ export const AssetUploader: React.FC<AssetUploaderProps> = ({
         <div>
           <h4 className="text-sm font-semibold text-navy-900">Aset Resmi Dokumen</h4>
           <p className="text-xs text-gray-500">
-            Logo AirNav tersedia sebagai aset bawaan. Unggah stempel dan tanda tangan yang telah mendapat izin.
+            Logo dapat diubah. Stempel dan tanda tangan resmi ditambahkan otomatis sebagai aset tetap.
           </p>
         </div>
         <div className="flex items-center gap-1.5 self-start sm:self-auto">
@@ -165,8 +166,7 @@ export const AssetUploader: React.FC<AssetUploaderProps> = ({
         </div>
       </div>
 
-      {/* 3 Dropzone Slots */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 gap-3">
         <DropzoneSlot
           label="Logo AirNav"
           placeholderText="LOGO"
@@ -175,22 +175,21 @@ export const AssetUploader: React.FC<AssetUploaderProps> = ({
           onUpload={(url) => onChange({ ...assets, logoUrl: url })}
           onRemove={() => onChange({ ...assets, logoUrl: null })}
         />
-        <DropzoneSlot
-          label="Stempel & TTD"
-          placeholderText="STEMPEL & TTD"
-          helperText="Stempel basah + TTD"
-          currentUrl={assets.stampUrl}
-          onUpload={(url) => onChange({ ...assets, stampUrl: url })}
-          onRemove={() => onChange({ ...assets, stampUrl: null })}
-        />
-        <DropzoneSlot
-          label="TTD Terpisah (Opsional)"
-          placeholderText="TTD"
-          helperText="Jika TTD terpisah"
-          currentUrl={assets.signatureUrl}
-          onUpload={(url) => onChange({ ...assets, signatureUrl: url })}
-          onRemove={() => onChange({ ...assets, signatureUrl: null })}
-        />
+        <div className="flex-1 min-w-[120px] flex flex-col items-center">
+          <span className="text-[12px] font-semibold text-navy-900 mb-1">
+            Stempel &amp; TTD (Tetap)
+          </span>
+          <div className="w-full h-24 border border-gray-200 rounded-lg p-1.5 bg-white flex items-center justify-center shadow-xs">
+            <img
+              src={OFFICIAL_STAMP_SIGNATURE_URL}
+              alt="Stempel dan tanda tangan resmi"
+              className="max-h-full max-w-full object-contain"
+            />
+          </div>
+          <span className="text-[9.5px] text-gray-500 mt-1 leading-tight">
+            Otomatis di posisi tanda tangan
+          </span>
+        </div>
       </div>
 
       {/* PDF Export Setting for Missing Placeholders */}
@@ -202,7 +201,7 @@ export const AssetUploader: React.FC<AssetUploaderProps> = ({
             onChange={(e) => onTogglePlaceholdersInPdf(e.target.checked)}
             className="w-3.5 h-3.5 text-navy-700 rounded border-gray-200 focus:ring-navy-600"
           />
-          <span>Tampilkan kotak placeholder ("LOGO", "STEMPEL", "TTD") di hasil PDF jika aset kosong</span>
+          <span>Tampilkan placeholder logo di hasil PDF jika logo kosong</span>
         </label>
       </div>
     </div>

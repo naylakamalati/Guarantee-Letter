@@ -6,8 +6,8 @@ A browser-based tool for preparing and previewing A4 hotel guarantee letters. Th
 
 - Letter drafts, templates, history, and uploaded images are stored in the user's browser; the app has no application server or environment variables.
 - Do not enter real guest details into a public demo.
-- The starter letter uses clearly fictional guest and signatory placeholders, not real people.
-- The official stamp and signature image files are intentionally excluded from Git and deployment. Users should upload only assets they are authorized to use. Uploads are processed in the browser.
+- Starter guest details are fictional. Generated letters use the fixed signatory name **NURUL HUDA** and the bundled official stamp-and-signature image.
+- The transparent stamp-and-signature asset is included in Git and deployment for automatic document generation. The logo remains user-replaceable; uploaded images are stored in the user's browser.
 - The app loads Inter and Tinos fonts from Google Fonts.
 
 ## Requirements
@@ -38,9 +38,9 @@ PDF export renders each A4 page in the browser with `html2canvas` and `jsPDF`. P
 2. In Vercel, import that repository and select the Vite project.
 3. Use the settings in `vercel.json`: build command `npm run build`, output directory `dist`.
 4. No environment variables are required.
-5. After deployment, test editing a draft, uploading an authorized asset, PDF download, and browser printing.
+5. After deployment, test editing a draft, PDF download, and browser printing; confirm the fixed stamp, signature, and signatory name appear in both outputs.
 
-`.gitignore` excludes build output, dependencies, local environment files, generated PDFs, and the stamp/signature assets.
+`.gitignore` excludes build output, dependencies, local environment files, generated PDFs, and other local stamp/signature assets. The bundled transparent official stamp-and-signature image is explicitly included.
 
 ## Project layout
 

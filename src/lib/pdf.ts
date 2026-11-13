@@ -63,13 +63,13 @@ function createCaptureWrapper(page: HTMLElement): {
     left: '0',
     top: '0',
     width: `${A4_WIDTH_MM}mm`,
-    height: `${A4_HEIGHT_MM}mm`,
+    minHeight: `${A4_HEIGHT_MM}mm`,
     zIndex: '2147483647',
     backgroundColor: '#ffffff',
     opacity: '1',
     visibility: 'visible',
     pointerEvents: 'none',
-    overflow: 'hidden',
+    overflow: 'visible',
     margin: '0',
     padding: '0',
   });
@@ -85,11 +85,12 @@ function createCaptureWrapper(page: HTMLElement): {
     width: `${A4_WIDTH_MM}mm`,
     minWidth: `${A4_WIDTH_MM}mm`,
     maxWidth: `${A4_WIDTH_MM}mm`,
-    height: `${A4_HEIGHT_MM}mm`,
     minHeight: `${A4_HEIGHT_MM}mm`,
-    maxHeight: `${A4_HEIGHT_MM}mm`,
+    height: 'auto',
+    maxHeight: 'none',
     boxSizing: 'border-box',
     backgroundColor: '#ffffff',
+    overflow: 'visible',
   });
 
   wrapper.appendChild(clonedPage);
@@ -141,27 +142,35 @@ export async function exportToPdf(
       const canvas = await html2canvas(clonedPage, {
         scale: PDF_RENDER_SCALE,
         width: clonedPage.offsetWidth,
-        height: clonedPage.offsetHeight,
+        height: Math.max(clonedPage.offsetHeight, clonedPage.scrollHeight),
         useCORS: true,
         backgroundColor: '#ffffff',
         logging: false,
         scrollX: 0,
         scrollY: 0,
         windowWidth: clonedPage.offsetWidth,
-        windowHeight: clonedPage.offsetHeight,
+        windowHeight: Math.max(clonedPage.offsetHeight, clonedPage.scrollHeight),
       });
 
       if (index > 0) {
         doc.addPage('a4', 'portrait');
       }
 
+      const imageHeightMm = (canvas.height / canvas.width) * A4_WIDTH_MM;
+      const fitsA4 = imageHeightMm <= A4_HEIGHT_MM + 0.1;
+      const fitScale = fitsA4 ? 1 : A4_HEIGHT_MM / imageHeightMm;
+      const imageWidthMm = A4_WIDTH_MM * fitScale;
+      const fittedImageHeightMm = fitsA4
+        ? A4_HEIGHT_MM
+        : imageHeightMm * fitScale;
+
       doc.addImage(
         canvas.toDataURL('image/png'),
         'PNG',
-        0,
-        0,
-        A4_WIDTH_MM,
-        A4_HEIGHT_MM,
+        (A4_WIDTH_MM - imageWidthMm) / 2,
+        (A4_HEIGHT_MM - fittedImageHeightMm) / 2,
+        imageWidthMm,
+        fittedImageHeightMm,
         undefined,
         'FAST'
       );

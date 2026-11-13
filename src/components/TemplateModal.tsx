@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Bookmark, Plus, Trash2, Check, X, FileText } from 'lucide-react';
 import { LetterData, LetterTemplate } from '../types';
 import { loadTemplates, saveTemplate, deleteTemplate } from '../lib/storage';
+import { FIXED_SIGNATORY_NAME } from '../config/defaultLetter';
 
 interface TemplateModalProps {
   isOpen: boolean;
@@ -40,7 +41,7 @@ export const TemplateModal: React.FC<TemplateModalProps> = ({
       recipientBranch: currentData.recipientBranch,
       coverageType: currentData.coverageType,
       signatoryTitle: currentData.signatoryTitle,
-      signatoryName: currentData.signatoryName,
+      signatoryName: FIXED_SIGNATORY_NAME,
       billingBlock: [...currentData.billingBlock],
     };
 
@@ -114,7 +115,7 @@ export const TemplateModal: React.FC<TemplateModalProps> = ({
               <div className="text-[11px] text-gray-600 space-y-0.5">
                 <div>• Penerima: <strong>{currentData.recipient}</strong></div>
                 <div>• Cakupan: <strong>{currentData.coverageType}</strong></div>
-                <div>• Penandatangan: <strong>{currentData.signatoryName}</strong></div>
+                <div>• Penandatangan: <strong>{FIXED_SIGNATORY_NAME}</strong></div>
               </div>
               <div className="flex justify-end pt-1">
                 <button

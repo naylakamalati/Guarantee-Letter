@@ -17,6 +17,7 @@ import { SelectWithManual } from './SelectWithManual';
 import { GuestTable } from './GuestTable';
 import { AssetUploader } from './AssetUploader';
 import { formatLetterNumber } from '../lib/letterNumber';
+import { FIXED_SIGNATORY_NAME } from '../config/defaultLetter';
 
 interface FormProps {
   data: LetterData;
@@ -483,7 +484,7 @@ export const Form: React.FC<FormProps> = ({ data, onChange }) => {
               </span>
               {!openSections[5] && (
                 <div className="text-[11.5px] text-gray-500 mt-0.5 truncate max-w-[280px]">
-                  Oleh: <span className="text-gray-800 font-medium">{data.signatoryName}</span> ({data.signatoryTitle})
+                  Oleh: <span className="text-gray-800 font-medium">{FIXED_SIGNATORY_NAME}</span> ({data.signatoryTitle})
                 </div>
               )}
             </div>
@@ -510,16 +511,13 @@ export const Form: React.FC<FormProps> = ({ data, onChange }) => {
 
             <div>
               <label className="block text-xs font-medium text-gray-800 mb-1">
-                Nama Pejabat Penandatangan <span className="text-navy-700">*</span>
+                Nama Pejabat Penandatangan
               </label>
               <input
                 type="text"
-                value={data.signatoryName}
-                onChange={(e) =>
-                  onChange({ ...data, signatoryName: e.target.value.toUpperCase() })
-                }
-                placeholder="NAMA PENANDATANGAN"
-                className="w-full h-10 px-3 bg-white border border-gray-200 rounded-lg text-xs font-bold uppercase text-gray-800 focus:outline-none focus:ring-2 focus:ring-navy-600"
+                value={FIXED_SIGNATORY_NAME}
+                readOnly
+                className="w-full h-10 px-3 bg-gray-100 border border-gray-200 rounded-lg text-xs font-bold uppercase text-gray-600 cursor-not-allowed"
               />
             </div>
           </div>
@@ -543,7 +541,7 @@ export const Form: React.FC<FormProps> = ({ data, onChange }) => {
               </span>
               {!openSections[6] && (
                 <div className="text-[11.5px] text-gray-500 mt-0.5 truncate max-w-[280px]">
-                  Status: Logo {data.assets.logoUrl ? 'Terpasang ✔' : '-'} • Stempel &amp; TTD {data.assets.stampUrl ? 'Terpasang ✔' : '-'}
+                  Status: Logo {data.assets.logoUrl ? 'Terpasang ✔' : '-'} • Stempel &amp; TTD Terpasang (Tetap)
                 </div>
               )}
             </div>

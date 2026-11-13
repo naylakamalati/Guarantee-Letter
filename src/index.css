@@ -47,7 +47,26 @@
 
 .guest-table-wrapper table {
   width: 100%;
-  table-layout: fixed;
+  table-layout: auto;
+}
+
+.guest-table,
+.guest-table th,
+.guest-table td {
+  border-width: 0.5pt;
+}
+
+.guest-table [class*='border-b'] {
+  border-bottom-width: 0.5pt;
+}
+
+.guest-table [class*='border-r'] {
+  border-right-width: 0.5pt;
+}
+
+.guest-table th,
+.guest-table td {
+  overflow-wrap: anywhere;
 }
 
 /* Guest Table Header Optical & Canvas Baseline Centering */
@@ -84,7 +103,6 @@
   *::after {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-    color-adjust: exact !important;
     box-sizing: border-box;
   }
 
@@ -151,13 +169,13 @@
     padding: 15mm 20mm !important;
     width: 210mm !important;
     min-height: 297mm !important;
-    height: 297mm !important;
+    height: auto !important;
     background: #ffffff !important;
     color: #000000 !important;
     box-sizing: border-box !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-    overflow: hidden !important;
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+    overflow: visible !important;
     visibility: visible !important;
     opacity: 1 !important;
   }

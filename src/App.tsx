@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { LetterData, LetterTemplate } from './types';
 import { loadSavedLetter, saveLetterDraft, addToHistory } from './lib/storage';
-import { INITIAL_LETTER_DATA } from './config/defaultLetter';
+import {
+  FIXED_SIGNATORY_NAME,
+  INITIAL_LETTER_DATA,
+  OFFICIAL_STAMP_SIGNATURE_URL,
+} from './config/defaultLetter';
 import { validateLetterData } from './lib/validation';
 import { generatePdfFilename } from './lib/filename';
 import { exportToPdf } from './lib/pdf';
@@ -117,7 +121,12 @@ export const App: React.FC = () => {
   const handleReset = () => {
     setData({
       ...INITIAL_LETTER_DATA,
-      assets: { ...data.assets }, // retain uploaded logos/stamps
+      signatoryName: FIXED_SIGNATORY_NAME,
+      assets: {
+        ...data.assets,
+        stampUrl: OFFICIAL_STAMP_SIGNATURE_URL,
+        signatureUrl: null,
+      },
     });
     setToastMessage({
       text: 'Formulir berhasil direset ke pengaturan standar.',
@@ -133,7 +142,7 @@ export const App: React.FC = () => {
       recipientBranch: template.recipientBranch || '',
       coverageType: template.coverageType,
       signatoryTitle: template.signatoryTitle,
-      signatoryName: template.signatoryName,
+      signatoryName: FIXED_SIGNATORY_NAME,
       billingBlock: [...template.billingBlock],
     }));
     setToastMessage({
@@ -144,7 +153,15 @@ export const App: React.FC = () => {
 
   // Restore from history
   const handleRestoreHistory = (historyData: LetterData) => {
-    setData(historyData);
+    setData({
+      ...historyData,
+      signatoryName: FIXED_SIGNATORY_NAME,
+      assets: {
+        ...historyData.assets,
+        stampUrl: OFFICIAL_STAMP_SIGNATURE_URL,
+        signatureUrl: null,
+      },
+    });
     setToastMessage({
       text: 'Surat dari riwayat berhasil dibuka kembali.',
       type: 'success',

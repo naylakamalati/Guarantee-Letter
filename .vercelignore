@@ -2,4 +2,5 @@
 .env.*
 !.env.example
 public/assets/airnav-stempel-ttd*
+!public/assets/airnav-stempel-ttd-transparent.png
 *.pdf

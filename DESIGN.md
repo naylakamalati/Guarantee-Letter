@@ -118,9 +118,8 @@ A searchable dropdown used for every green-highlighted field: recipient, room ty
 - Inline error under the row if Check Out is not after Check In. Minimum one row; delete is disabled on the last row.
 
 ### Asset Uploader
-- Three slots: **Logo**, **Stempel**, **Tanda Tangan**. Each is a 96px dashed-border drop zone with thumbnail, file name, replace and remove actions.
-- Empty state placeholder text: "LOGO", "STEMPEL", "TTD". PNG with transparent background recommended (helper text).
-- Note: "Aset hanya disimpan di browser Anda."
+- The **Logo** is a user-replaceable 96px drop zone. The bundled transparent **Stempel & TTD** image is shown as a fixed, read-only preview and is included automatically in the letter.
+- The stamp and signature image is bundled for document generation; only user-uploaded logo changes are stored in the browser.
 
 ### Feedback
 - Toasts bottom-right, auto-dismiss in 4s: "PDF berhasil dibuat" (success), "Form telah direset".
@@ -151,14 +150,14 @@ The preview is **editable HTML, never a scanned image**. It mirrors the AirNav r
    - Column widths approximately: No 8%, Nama 36%, Type 18%, Check In 19%, Check Out 19%.
 7. **Coverage paragraph**: "Adalah tamu Perum LPPNPI dan menanggung biaya tamu tersebut diatas *Room only*. Tagihan dapat dikirimkan kepada :" (the coverage words follow the selected option).
 8. **Billing block**, centered, 11.5pt, 1.6 line spacing: organization and billing details entered by the user.
-9. **Signature block**, left aligned about 22 mm from the left margin: signatory title (bold caps), then about 28 mm of vertical space where an authorized **stamp** and **signature** may be uploaded by the user and layered, then the signatory name in bold caps.
+9. **Signature block**, left aligned about 22 mm from the left margin: signatory title (bold caps), followed by a fixed-height slot containing the transparent, bundled **stamp and signature** image at its original proportions, then the fixed signatory name **NURUL HUDA** in bold caps. Keep the image and name together without overlap.
 
 ### Pagination rules
 - If the guest table grows beyond the page, continue on page 2: repeat the table header row, never split a row across pages, and keep the whole signature block together (move it to the next page rather than cutting it).
 - Page 2 repeats the letterhead only if "Ulangi kop surat" is enabled in settings (default off).
 
 ### Missing-asset placeholders
-Dashed gray outline box with centered gray label ("LOGO", "STEMPEL", "TTD"). Placeholders are **hidden in the exported PDF** unless the user turns on "Tampilkan placeholder di PDF".
+The dashed gray **LOGO** placeholder is hidden in the exported PDF unless the user turns on "Tampilkan placeholder di PDF". The fixed stamp and signature image is always present.
 
 ---
 
